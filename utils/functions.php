@@ -1,6 +1,6 @@
 <?php
-require 'utils/connect.php';
-require 'utils/arrays.php';
+require 'connect.php';
+require 'arrays.php';
 
 // Set Token
 $token = 'kEdAOaZzCWtapUMqxnrnKITLtjHluBOZfncHTxZC';
@@ -25,7 +25,7 @@ $genreVals = array();
 function retrieveAlbumsDB($countryTable)
 {
     global $header, $pdo, $country, $decade, $genre, 
-    $albumNumbers, $decadeDB, $genreVals, $decadeTable,
+    $albumNumbers, $decadeDb, $genreVals, $decadeTable,
     $genreTable;
 
     foreach ($countryTable as $countryElement)
@@ -80,35 +80,80 @@ function retrieveAlbumsDB($countryTable)
 
 // Set Array Data from Discogs
 
+function retrieveAlbumsArray($table)
+{
+    global $header, $country, $decade, $genre, 
+    $albumNumbers, $decadeDb, $genreVals, $decadeTable,
+    $genreTable;
+    $countryDatas = [];
+
+    foreach ($table as $countryElement)
+    {
+        $country = str_replace('+',' ',$countryElement);
+        foreach ($decadeTable as $decadeElement)
+        {
+            foreach ($genreTable as $genreElement) 
+            {
+                if ($genreElement == 'hiphop')
+                    $genreElement = 'hip+hop';
+                $genrename = $genreElement;
+                // JSON
+                $apiCall = 'https://api.discogs.com/database/search?format=album&year='.$decadeElement.'&type=release&genre='.$genreElement.'&country='.$countryElement.'';
+                usleep(1000000);
+                $ch = curl_init($apiCall);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'datamusicmatthieuvdl/1.0');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $data = curl_exec($ch);
+                curl_close($ch);
+                $albumInfos = json_decode($data);
+                $albumNumbers = $albumInfos->pagination->items;
+                array_push($genreVals, $albumNumbers);
+            }
+
+            $decadeDb = substr($decadeElement, 0, 4);
+            settype($decadeDb, 'integer');
+
+            $countryDatasLocal = [$country,$genreVals[0],$genreVals[1],
+            $genreVals[2],$genreVals[3],$genreVals[4],$genreVals[5],$genreVals[6],$genreVals[7],
+            $genreVals[8],$genreVals[9],$genreVals[10],$decadeDb];
+            $genreVals = array();
+            array_push($countryDatas, $countryDatasLocal);
+            
+        }
+    }
+    return $countryDatas;
+}
 
 // Function add old countries
 
-// $countryFusion = 
-//     array(
-//         array('USSR','Russia',''),
-//         array('Yugoslavia','Serbia',''),
-//         array('Czechoslovakia', 'Czech+Republic', 'Slovakia')
-//     );
-
 $countryFusion =
 [
-['USSR','Russia',''],
-['Yugoslavia','Serbia',''],
-['Czechoslovakia','Czech+Republic','Slovakia']
+['Russia','USSR'],
+['Serbia','Yugoslavia'],
+['Czech+Republic','Czechoslovakia'],
+['Slovakia','Czechoslovakia',]
 ];
 
+// Function: Merge old with new countries
 
 function mergeCountry($table)
 {
     $size = count($table) - 1;
     foreach ($table as $tableElement) 
     {
+        $arr0 = retrieveAlbumsArray($tableElement[0]);
+        $arr1 = retrieveAlbumsArray($tableElement[1]);
+
         return $tableElement[$size];
 
     }
-
-
 }
 
-retrieveAlbumsDB($countryList);
-mergeCountry($countryFusion);
+
+$decadeTable = array('1960-1969', '1970-1979');
+
+$testArray = ['France'];
+retrieveAlbumsArray($testArray);
+print_r($countryDatas);
+
