@@ -125,6 +125,19 @@ function retrieveAlbumsArray($table)
     return $countryDatas;
 }
 
+// Function Merge 2 different arrays with same size
+function mergeArrays($array1, $array2)
+{
+    for ($i=0; $i < count($array1); $i++)
+    { 
+        if ($i == 0 || $i == count($array1) - 1)
+            $array1[$i] = $array1[$i];
+        else
+            $array1[$i] = $array1[$i] + $array2[$i];
+    }
+    return $array1;
+}
+
 // Function add old countries
 
 $countryFusion =
@@ -134,6 +147,8 @@ $countryFusion =
 ['Czech+Republic','Czechoslovakia'],
 ['Slovakia','Czechoslovakia',]
 ];
+
+
 
 // Function: Merge old with new countries
 
@@ -145,6 +160,7 @@ function mergeCountry($table)
         $arr0 = retrieveAlbumsArray($tableElement[0]);
         $arr1 = retrieveAlbumsArray($tableElement[1]);
 
+
         return $tableElement[$size];
 
     }
@@ -154,6 +170,5 @@ function mergeCountry($table)
 $decadeTable = array('1960-1969', '1970-1979');
 
 $testArray = ['France'];
-retrieveAlbumsArray($testArray);
-print_r($countryDatas);
 
+print_r(retrieveAlbumsArray($testArray));
