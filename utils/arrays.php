@@ -12,7 +12,6 @@ $countryList = array(
  'Azerbaijan',
  'Barbados',
  'Bangladesh',
- 'Belgium',
  'Bulgaria',
  'Bahrain',
  'Benin',
@@ -34,7 +33,6 @@ $countryList = array(
  'Cuba',
  'Curaçao',
  'Cyprus',
- 'Germany',
  'Djibouti',
  'Denmark',
  'Dominica',
@@ -123,14 +121,10 @@ $countryList = array(
  'Qatar',
  'Reunion',
  'Romania',
- 'Serbia',
- 'Russia',
  'Seychelles',
  'Sudan',
- 'Sweden',
  'Singapore',
  'Slovenia',
- 'Slovakia',
  'Senegal',
  'Suriname',
  'Syria',
@@ -156,7 +150,6 @@ $countryList = array(
  'Mayotte',
  'South+Africa',
  'Zambia',
- 'Zimbabwe',
  'Gibraltar',
  'Virgin+Islands',
  'British+Virgin+Islands',
@@ -297,7 +290,11 @@ $countryFusion =
     ['Russia','USSR'],
     ['Serbia','Yugoslavia'],
     ['Czech+Republic','Czechoslovakia'],
-    ['Slovakia','Czechoslovakia',]
+    ['Slovakia','Czechoslovakia'],
+    ['Germany','German+Democratic+Republic+%28GDR%29'],
+    ['Sweden','Scandinavia'],
+    ['Belgium','Benelux'],
+    ['Zimbabwe','Rhodesia']
 ];
 
 $countryDatas = [];

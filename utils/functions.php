@@ -20,7 +20,6 @@ $decadeDb = '';
 // Arrays
 $genreVals = array();
 
-
 // Set DB Data from Discogs
 function retrieveAlbumsDB($countryTable)
 {
@@ -186,8 +185,7 @@ function mergeCountry($table)
 }
 
 // Launch Functions
-mergeCountry($countryFusion);
-
+// mergeCountry($countryFusion);
 retrieveAlbumsDb($unaddedCountries);
 
 // TESTS
