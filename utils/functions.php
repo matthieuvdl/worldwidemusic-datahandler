@@ -30,7 +30,24 @@ function retrieveAlbumsDB($countryTable)
 
     foreach ($countryTable as $countryElement)
     {
-        $country = str_replace('+',' ',$countryElement);
+        if($countryElement == 'Congo%2C+Republic+of+the')
+            $country = 'Republic of Congo';
+        else if ($countryElement == 'Congo%2C+Democratic+Republic+of+the')
+            $country = 'Democratic Republic of Congo';
+        else if ($countryElement == 'Moldova%2C+Republic+of')
+            $country = 'Moldova';
+        else if ($countryElement == 'Man%2C+Isle+of')
+            $country = 'Isle of Man';
+        else if ($countryElement == 'Gambia%2C+The')
+            $country = 'Gambia';
+        else if ($countryElement == 'Micronesia%2C+Federated+States+of')
+            $country = 'Federated States of Micronesia';
+        else
+        {
+            $country = str_replace('+',' ',$countryElement);
+            $country = str_replace('%26','and',$country);
+            $country = str_replace('%2C',',',$country);
+        }
         foreach ($decadeTable as $decadeElement)
         {
             foreach ($genreTable as $genreElement) 
@@ -170,6 +187,8 @@ function mergeCountry($table)
 
 // Launch Functions
 mergeCountry($countryFusion);
+
+retrieveAlbumsDb($unaddedCountries);
 
 // TESTS
 // $testArray1 = 'France';
