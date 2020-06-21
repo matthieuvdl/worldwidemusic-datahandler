@@ -1,5 +1,5 @@
 <?php
-require 'connect.php';
+require 'connect2.php';
 require 'arrays.php';
 
 // Set Token
@@ -136,39 +136,46 @@ function mergeMultiArrays($arr1, $arr2)
     return $result;
 }
 
-// Old countries with New countries equivalence array
-$countryFusion =
-[
-    ['France','USSR']
-];
-// ['Serbia','Yugoslavia'],
-// ['Czech+Republic','Czechoslovakia'],
-// ['Slovakia','Czechoslovakia',]
-
-
 // Function: Merge old with new countries
-$decadeTable = array('1970-1979', '1980-1989', '1990-1999');
 function mergeCountry($table)
 {
+    global $decadeTable, $pdo;
     for($z=0; $z < count($table); $z++)
     {
         $arr0 = retrieveAlbumsArray($table[$z][0]);
         $arr1 = retrieveAlbumsArray($table[$z][1]);
         $arr2 = mergeMultiArrays($arr0, $arr1);
+        for ($i=0; $i < count($decadeTable) ; $i++) 
+        {
+            $prepare = $pdo->prepare('INSERT INTO albums (country, rock, jazz, pop, folk, funk, electronic, classical, latin, hiphop, reggae, blues, decade) 
+            VALUES (:country, :rock, :jazz, :pop, :folk, :funk, :electronic, :classical, :latin, :hiphop, :reggae, :blues, :decade)');
+            $prepare->execute(array(
+            ':country' => $arr2[$i][0],
+            ':rock' => $arr2[$i][1],
+            ':jazz' => $arr2[$i][2],
+            ':pop' => $arr2[$i][3],
+            ':folk' => $arr2[$i][4],
+            ':funk' => $arr2[$i][5],
+            ':electronic' => $arr2[$i][6],
+            ':classical' => $arr2[$i][7],
+            ':latin' => $arr2[$i][8],
+            ':hiphop' => $arr2[$i][9],
+            ':reggae' => $arr2[$i][10],
+            ':blues' => $arr2[$i][11],
+            ':decade' => $arr2[$i][12])
+            );
+        }
     }
-    return $arr2;
 }
 
+// Launch Functions
+mergeCountry($countryFusion);
 
-
-
-$testArray1 = 'France';
-$testArray2 = 'USSR';
-print_r(retrieveAlbumsArray($testArray1));
-print_r(retrieveAlbumsArray($testArray2));
-
-print_r(mergeCountry($countryFusion));
-
-
+// TESTS
+// $testArray1 = 'France';
+// $testArray2 = 'USSR';
+// print_r(retrieveAlbumsArray($testArray1));
+// print_r(retrieveAlbumsArray($testArray2));
+// print_r(mergeCountry($countryFusion));
 // print_r($countryFusion[0][1]);
 

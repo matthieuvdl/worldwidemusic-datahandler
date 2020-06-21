@@ -167,13 +167,15 @@ $unaddedCountries = array(
 'Macau',
 'Vatican+City'
 );
-    
-$countryFusion = 
-    array(
-        array('USSR','Russia',''),
-        array('Yugoslavia','Serbia',''),
-        array('Czechoslovakia', 'Czech+Republic', 'Slovakia')
-    );
+
+// Old countries to merge with new countries
+$countryFusion =
+[
+    ['Russia','USSR'],
+    ['Serbia','Yugoslavia'],
+    ['Czech+Republic','Czechoslovakia'],
+    ['Slovakia','Czechoslovakia',]
+];
 
 $countryDatas = [];
 
