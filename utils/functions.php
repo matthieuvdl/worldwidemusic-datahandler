@@ -78,8 +78,7 @@ function retrieveAlbumsDB($countryTable)
     }
 }
 
-// Set Array Data from Discogs
-
+// Generate an array with Discogs Data
 function retrieveAlbumsArray($countryElement)
 {
     global $header, $country, $albumNumbers, $decadeTable, $genreTable;
@@ -113,7 +112,7 @@ function retrieveAlbumsArray($countryElement)
     return $countryDatas;
 }
 
-// Function Merge 2 different arrays with same size
+// Function: Apply (+) to 2 different arrays with the same size
 function mergeArrays($array1, $array2)
 {
     for ($i=0; $i < count($array1); $i++)
@@ -126,49 +125,50 @@ function mergeArrays($array1, $array2)
     return $array1;
 }
 
-// Function add old countries
+// Merge Multi-dimensionnal arrays
+function mergeMultiArrays($arr1, $arr2)
+{
+    $result = [];
+    for ($i=0; $i < count($arr1); $i++)
+    {
+        array_push($result, mergeArrays($arr1[$i], $arr2[$i]));
+    }
+    return $result;
+}
 
+// Old countries with New countries equivalence array
 $countryFusion =
 [
-    [['Russia'],['USSR']]
+    ['France','USSR']
 ];
 // ['Serbia','Yugoslavia'],
 // ['Czech+Republic','Czechoslovakia'],
 // ['Slovakia','Czechoslovakia',]
 
 
-
 // Function: Merge old with new countries
-
+$decadeTable = array('1970-1979', '1980-1989', '1990-1999');
 function mergeCountry($table)
 {
-    global $decadeTable;
-    $size = count($table) - 1;
-    $arr4 = [];
     for($z=0; $z < count($table); $z++)
     {
         $arr0 = retrieveAlbumsArray($table[$z][0]);
         $arr1 = retrieveAlbumsArray($table[$z][1]);
-        $arr3 = [];
-        for ($i=0; $i < count($decadeTable); $i++) 
-        { 
-            $arr3 = mergeArrays($arr0[$i], $arr1[$i]);
-        }
-        array_push($arr4, $arr3);
-        // return $tableElement[$size];
+        $arr2 = mergeMultiArrays($arr0, $arr1);
     }
-    return $arr4;
+    return $arr2;
 }
 
 
 
-$decadeTable = array('2000-2009', '2010-2019');
 
-// print_r(mergeCountry($countryFusion));
+$testArray1 = 'France';
+$testArray2 = 'USSR';
+print_r(retrieveAlbumsArray($testArray1));
+print_r(retrieveAlbumsArray($testArray2));
+
+print_r(mergeCountry($countryFusion));
 
 
 // print_r($countryFusion[0][1]);
 
-$testArray = 'Russia';
-
-print_r(retrieveAlbumsArray($testArray));
