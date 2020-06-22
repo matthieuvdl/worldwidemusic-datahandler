@@ -230,5 +230,5 @@ function getAllGenreDecade($decade, $type)
 function parseToJson($obj)
 {
     $jsondata = json_encode($obj);
-    print_r($jsondata);
+    echo($jsondata);
 }
