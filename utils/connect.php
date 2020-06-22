@@ -23,3 +23,11 @@ define('DB_NAME', 'dbname');
 
 $pdo = new PDO('mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Set Token
+$token = 'kEdAOaZzCWtapUMqxnrnKITLtjHluBOZfncHTxZC';
+
+// Set Headers for CURL
+$header = array();
+$header[] = 'Authorization: Discogs token='.$token;
+$header[] = 'Content-type: application/json';

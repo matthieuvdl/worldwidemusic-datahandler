@@ -2,14 +2,6 @@
 require 'connect2.php';
 require 'arrays.php';
 
-// Set Token
-$token = 'kEdAOaZzCWtapUMqxnrnKITLtjHluBOZfncHTxZC';
-
-// Set Headers for CURL
-$header = array();
-$header[] = 'Authorization: Discogs token='.$token;
-$header[] = 'Content-type: application/json';
-
 // Values
 $country = '';
 $decade = '';
