@@ -180,8 +180,50 @@ function mergeCountry($table)
 function getGenreDecade($genre, $decade)
 {
     global $pdo;
+    $arr = [];
     $prepare = $pdo->prepare('SELECT * FROM albums WHERE decade='.$decade.' AND '.$genre.'=(GREATEST(rock, jazz, pop, folk, funk, electronic, classical, latin, hiphop, reggae, blues)) AND '.$genre.'!=0 ORDER BY '.$genre.' DESC');
     $prepare->execute();
-    $prepare->fetchAll();
-    print_r($prepare);
+    $countries = $prepare->fetchAll();
+    foreach ($countries as $country) 
+    {
+        $countryVal = [$country['country'], $genre];
+        array_push($arr, $countryVal);
+    }
+    return $arr;
+}
+
+// Function: Get ALL top Genre by Decade and return a country list
+function getAllGenreDecadeSorted($decade)
+{
+    global $genreTable;
+    $arr2 = [];
+    foreach ($genreTable as $genreElement) {
+        array_push($arr2, getGenreDecade($genreElement, $decade));
+    }
+    return $arr2;
+}
+
+// Function: 2 in 1 Get country array of genre by decade
+function getAllGenreDecade($decade)
+{
+    global $genreTable, $pdo;
+    $arr = [];
+    foreach ($genreTable as $genreElement) {
+        $prepare = $pdo->prepare('SELECT * FROM albums WHERE decade='.$decade.' AND '.$genreElement.'=(GREATEST(rock, jazz, pop, folk, funk, electronic, classical, latin, hiphop, reggae, blues)) AND '.$genreElement.'!=0 ORDER BY '.$genreElement.' DESC');
+        $prepare->execute();
+        $countries = $prepare->fetchAll();
+        foreach ($countries as $country) 
+        {
+            $countryVal = [$country['country'], $genreElement];
+            array_push($arr, $countryVal);
+        }
+    }
+    return $arr;
+}
+
+// Function : Parse an Array/Object to JSON Text
+function parseToJson($obj)
+{
+    $jsondata = json_encode($obj);
+    print_r($jsondata);
 }
