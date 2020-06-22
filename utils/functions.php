@@ -204,7 +204,7 @@ function getAllGenreDecadeSorted($decade)
 }
 
 // Function: 2 in 1 Get country array of genre by decade
-function getAllGenreDecade($decade)
+function getAllGenreDecade($decade, $type)
 {
     global $genreTable, $pdo;
     $arr = [];
@@ -217,6 +217,11 @@ function getAllGenreDecade($decade)
             $countryVal = [$country['country'], $genreElement];
             array_push($arr, $countryVal);
         }
+    }
+    if ($type == 'object') 
+    {
+        $object = (object) $arr;
+        return $object;
     }
     return $arr;
 }
