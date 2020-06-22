@@ -176,11 +176,12 @@ function mergeCountry($table)
     }
 }
 
-// TESTS
-// $testArray1 = 'France';
-// $testArray2 = 'USSR';
-// print_r(retrieveAlbumsArray($testArray1));
-// print_r(retrieveAlbumsArray($testArray2));
-// print_r(mergeCountry($countryFusion));
-// print_r($countryFusion[0][1]);
-
+// Function: Get top Genre by Decade and return a country list
+function getGenreDecade($genre, $decade)
+{
+    global $pdo;
+    $prepare = $pdo->prepare('SELECT * FROM albums WHERE decade='.$decade.' AND '.$genre.'=(GREATEST(rock, jazz, pop, folk, funk, electronic, classical, latin, hiphop, reggae, blues)) AND '.$genre.'!=0 ORDER BY '.$genre.' DESC');
+    $prepare->execute();
+    $prepare->fetchAll();
+    print_r($prepare);
+}
