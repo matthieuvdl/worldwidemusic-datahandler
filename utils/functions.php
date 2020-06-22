@@ -176,10 +176,6 @@ function mergeCountry($table)
     }
 }
 
-// Launch Functions
-// mergeCountry($countryFusion);
-retrieveAlbumsDb($unaddedCountries);
-
 // TESTS
 // $testArray1 = 'France';
 // $testArray2 = 'USSR';
