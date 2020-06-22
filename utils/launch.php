@@ -1,9 +1,17 @@
 <?php
-require 'connect2.php';
-require 'arrays.php';
+require 'functions.php';
 
-// Launch Functions
+//            Launch Functions File         //
+//      ---------------------------------   //
+//      To launch a function,               //
+//      Just remove the // comment before   //
+//      the function call.                  //
 
-// Full Update
-retrieveAlbumsDb($countryList);
-mergeCountry($countryFusion);
+
+
+// Full Update :
+    // retrieveAlbumsDb($countryList);
+    // mergeCountry($countryFusion);
+
+// Other funcs :
+// parseToJson(getAllGenreDecade('1970'));
