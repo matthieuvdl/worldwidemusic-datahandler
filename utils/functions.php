@@ -226,6 +226,30 @@ function getAllGenreDecade($decade, $type)
     return $arr;
 }
 
+// Function: Total of Genres + Whole total
+function getTotal($decade)
+{
+    $arr = [];
+    global $pdo;
+    $query = $pdo->query('SELECT 
+    SUM(rock) as "rock",
+    SUM(jazz) as "jazz",
+    SUM(pop) as "pop",
+    SUM(folk) as "folk",
+    SUM(folk) as "funk",
+    SUM(electronic) as "electronic",
+    SUM(classical) as "classical",
+    SUM(latin) as "latin",
+    SUM(hiphop) as "hiphop",
+    SUM(reggae) as "reggae",
+    SUM(blues) as "blues",
+    (SUM(rock) + SUM(jazz) + SUM(pop) + SUM(folk) + SUM(funk) + SUM(electronic) + SUM(classical) + SUM(latin) + SUM(hiphop) + SUM(reggae) + SUM(blues)) as "Total",
+    decade 
+    FROM albums WHERE decade='.$decade.'');
+    $value = $query->fetch();
+    return [$value['rock'],$value['jazz'],$value['pop'],$value['folk'],$value['funk'],$value['electronic'],$value['classical'],$value['latin'],$value['hiphop'],$value['reggae'],$value['blues'],$value['Total'],$value['decade']];
+}
+
 // Function : Parse an Array/Object to JSON Text
 function parseToJson($obj)
 {

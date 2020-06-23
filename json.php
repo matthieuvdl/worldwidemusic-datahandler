@@ -22,8 +22,12 @@ if (isset($_GET['decade']) && isset($_GET['type']))
         parseToJson(getAllGenreDecadeSorted($_GET['decade']));
     }
 }
+else if (isset($_GET['decade']) && isset($_GET['total'])) 
+{
+    parseToJson(getTotal($_GET['decade']));
+}
 else
 {
-    print_r('You must specify a decade and a type');
+    parseToJson('You must specify a decade and a type');
 }
 
