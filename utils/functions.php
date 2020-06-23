@@ -229,7 +229,6 @@ function getAllGenreDecade($decade, $type)
 // Function: Total of Genres + Whole total
 function getTotal($decade)
 {
-    $arr = [];
     global $pdo;
     $query = $pdo->query('SELECT 
     SUM(rock) as "rock",
@@ -247,7 +246,20 @@ function getTotal($decade)
     decade 
     FROM albums WHERE decade='.$decade.'');
     $value = $query->fetch();
-    return [$value['rock'],$value['jazz'],$value['pop'],$value['folk'],$value['funk'],$value['electronic'],$value['classical'],$value['latin'],$value['hiphop'],$value['reggae'],$value['blues'],$value['Total'],$value['decade']];
+    $arr = array('rock' => $value['rock'],
+    'jazz' => $value['jazz'],
+    'pop' => $value['pop'],
+    'folk' => $value['folk'],
+    'funk' => $value['funk'],
+    'electronic' => $value['electronic'],
+    'classical' => $value['classical'],
+    'latin' => $value['latin'],
+    'hiphop' => $value['hiphop'],
+    'reggae' => $value['reggae'],
+    'blues' => $value['blues'],
+    'total' => $value['Total'],
+    'decade' => $value['decade']);
+    return (object) $arr;
 }
 
 // Function : Parse an Array/Object to JSON Text
