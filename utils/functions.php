@@ -236,7 +236,7 @@ function getTotal($decade)
     SUM(jazz) as "jazz",
     SUM(pop) as "pop",
     SUM(folk) as "folk",
-    SUM(folk) as "funk",
+    SUM(funk) as "funk",
     SUM(electronic) as "electronic",
     SUM(classical) as "classical",
     SUM(latin) as "latin",
